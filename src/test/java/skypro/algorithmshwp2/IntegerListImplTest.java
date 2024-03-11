@@ -8,75 +8,76 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class StringListImplTest {
-    StringListImpl out;
-    String act;
-    String exp;
+class IntegerListImplTest {
+    IntegerListImpl out;
+    int act;
+    int exp;
 
     @BeforeEach
     void setUp() {
-        out = new StringListImpl(5);
-        out.add("One");
-        out.add("Two");
-        out.add("Three");
-        out.add("Four");
+        out = new IntegerListImpl(5);
+        out.add(10);
+        out.add(20);
+        out.add(30);
+        out.add(40);
     }
 
     @Test
     void shouldReturnCorrectResultOfAdditionTest() {
-        act = out.add("Five");
-        exp = "Five";
+        act = out.add(50);
+        exp = 50;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfAdditionByIndexTest() {
-        act = out.add(2, "Five");
-        exp = "Five";
+        act = out.add(2, 50);
+        exp = 50;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfSettingTest() {
-        act = out.set(1, "Three");
-        exp = "Three";
+        act = out.set(1, 30);
+        exp = 30;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfRemovingTest() {
-        act = out.remove("One");
-        exp = "One";
+        Integer i = 10;
+        act = out.remove(i);
+        exp = 10;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfRemovingByIndexTest() {
         act = out.remove(0);
-        exp = "One";
+        exp = 10;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfContainingTest() {
-        Boolean act = out.contains("One");
+        Boolean act = out.contains(10);
         Boolean exp = true;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfIndexOfTest() {
-        int act = out.indexOf("One");
+        int act = out.indexOf(10);
         int exp = 0;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfLastIndexOfTest() {
-        int act = out.lastIndexOf("Ten");
+        int act = out.lastIndexOf(100);
         int exp = -1;
         assertEquals(exp, act);
-        act = out.lastIndexOf("One");
+        act = out.lastIndexOf(10);
         exp = 0;
         assertEquals(exp, act);
     }
@@ -84,13 +85,14 @@ class StringListImplTest {
     @Test
     void shouldReturnCorrectResultOfGettingTest() {
         act = out.get(2);
-        exp = "Three";
+        exp = 30;
         assertEquals(exp, act);
     }
 
     @Test
     void shouldReturnCorrectResultOfEqualityTest() {
-        Boolean act = out.equals(out);
+        IntegerListImpl out2 = out;
+        Boolean act = out.equals(out2);
         Boolean exp = true;
         assertEquals(exp, act);
     }
@@ -119,14 +121,16 @@ class StringListImplTest {
 
     @Test
     void shouldReturnCorrectResultOfToArrayTest() {
-        act = Arrays.toString(out.toArray());
-        exp = "[One, Two, Three, Four]";
+        String act = Arrays.toString(out.toArray());
+        String exp = "[10, 20, 30, 40]";
         assertEquals(exp, act);
     }
 
     @Test
     void shouldThrowItemNotFoundExceptionTest() {
-        assertThrows(ItemNotFoundException.class, () -> out.remove("Six"));
+        Integer i = 30;
+        out.remove(2);
+        assertThrows(ItemNotFoundException.class, () -> out.remove(i));
     }
 
     @Test
@@ -137,12 +141,12 @@ class StringListImplTest {
     @Test
     void shouldThrowNullArgumentExceptionTest() {
         out.clear();
-        assertThrows(NullArgumentException.class, () -> out.add(""));
+        assertThrows(NullArgumentException.class, () -> out.add(null));
     }
 
     @Test
     void shouldThrowSizeOutOfBoundExceptionTest() {
-        out.add("Five");
-        assertThrows(SizeOutOfBoundException.class, () -> out.add("Six"));
+        out.add(50);
+        assertThrows(SizeOutOfBoundException.class, () -> out.add(60));
     }
 }
